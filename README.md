@@ -8,7 +8,7 @@ Copy it to the `.hg` directory of your repository on the server, change its `.hg
 incoming = python:.hg/hooks.py:incoming
 ```
 
-and put a `secrets.txt` file right next to it:
+and put a `secrets.json` file right next to it:
 
 ```json
 {

@@ -6,7 +6,7 @@ EXTENSIONS = [
 import json, os, re, urllib.error, urllib.request
 
 try:
-    secretsPath = os.path.dirname(os.path.abspath(__file__)) + "/secrets.txt"
+    secretsPath = os.path.dirname(os.path.abspath(__file__)) + "/secrets.json"
     secrets = json.load(open(secretsPath))
 except (IOError, ValueError) as ex:
     from mercurial import ui
