@@ -25,6 +25,7 @@ def incoming(ui, repo, node, **kwargs):
     pattern = r"\.(?:" + "|".join(EXTENSIONS) + ")$"
     if not any(re.search(pattern, i.decode("utf-8")) != None for i in ctx.files()):
         return
+    # end if
 
     shortId = ctx.hex()[:12].decode("utf-8")
 
@@ -36,6 +37,7 @@ def incoming(ui, repo, node, **kwargs):
     else:
         title = description
         description = None
+    # end if
 
     branch = ctx.branch().decode("utf-8")
     author = ctx.user().decode("utf-8")
@@ -55,8 +57,10 @@ def post_discord(ui, title, description, branch, author, shortId):
     }
     if title:
         embed["title"] = title.decode("utf-8")
+    # end if
     if description:
         embed["description"] = description.decode("utf-8")
+    # end if
 
     request = urllib.request.Request(
         secrets["webhookUrl"],
@@ -69,3 +73,5 @@ def post_discord(ui, title, description, branch, author, shortId):
     except urllib.error.URLError as ex:
         ui.write(("Discord incoming hook web request failed because " + str(ex) + "\n").encode("utf-8"))
         return
+    # end try
+# end def
