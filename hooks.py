@@ -25,15 +25,6 @@ def incoming(ui, repo, node, **kwargs):
 
     shortId = ctx.hex()[:12].decode("utf-8")
 
-    embed = {
-        "url": secrets["hgwebUrl"] + "rev/" + shortId,
-        "fields": [
-            { "name": "Branch", "value": ctx.branch().decode("utf-8"), "inline": True },
-            { "name": "Author", "value": ctx.user().decode("utf-8"), "inline": True },
-            { "name": "Node", "value": shortId, "inline": True }
-        ]
-    }
-
     description = ctx.description().strip()
     lineBreak = description.find(b"\n")
     if lineBreak >= 0:
