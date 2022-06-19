@@ -48,7 +48,7 @@ def incoming(ui, repo, node, **kwargs):
 
 def post_discord(ui, title, description, branch, author, shortId):
     embed = {
-        "url": secrets["hgwebUrl"] + "rev/" + shortId,
+        "url": secrets["hg"]["commitUrl"].format(short_id=shortId),
         "fields": [
             {"name": "Branch", "value": branch, "inline": True},
             {"name": "Author", "value": author, "inline": True},
