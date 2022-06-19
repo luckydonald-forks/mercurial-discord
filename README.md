@@ -9,10 +9,4 @@ incoming = python:.hg/hooks.py:incoming
 ```
 
 and put a `secrets.json` file right next to it:
-
-```json
-{
-    "hgwebUrl": "https://project.local/hg/reponame/",
-    "webhookUrl": "https://discord.com/api/webhooks/gibberish123456789oijhzgtfrdsa"
-}
-```
+See `secrets.exemaple.json`.
