@@ -43,6 +43,22 @@ def incoming(ui, repo, node, **kwargs):
         title = description
         description = None
 
+    branch = ctx.branch().decode("utf-8")
+    author = ctx.user().decode("utf-8")
+
+    post_discord(ui, title, description, branch, author, shortId)
+# end def
+
+
+def post_discord(ui, title, description, branch, author, shortId):
+    embed = {
+        "url": secrets["hgwebUrl"] + "rev/" + shortId,
+        "fields": [
+            {"name": "Branch", "value": branch, "inline": True},
+            {"name": "Author", "value": author, "inline": True},
+            {"name": "Node", "value": shortId, "inline": True}
+        ]
+    }
     if title:
         embed["title"] = title.decode("utf-8")
     if description:
