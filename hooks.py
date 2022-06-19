@@ -3,6 +3,16 @@ EXTENSIONS = [ "bat", "cginc", "compute", "cpp", "cs", "groovy", "h", "hgignore"
 
 import json, os, re, urllib.error, urllib.request
 
+try:
+    secretsPath = os.path.dirname(os.path.abspath(__file__)) + "/secrets.txt"
+    secrets = json.load(open(secretsPath))
+except (IOError, ValueError) as ex:
+    from mercurial import ui
+
+    ui.write(("Discord incoming hook could not load secrets because " + str(ex) + "\n").encode("utf-8"))
+    exit(1)
+
+
 def EscapeMarkdown(str):
     return str # TODO
 
@@ -11,13 +21,6 @@ def incoming(ui, repo, node, **kwargs):
 
     pattern = r"\.(?:" + "|".join(EXTENSIONS) + ")$"
     if not any(re.search(pattern, i.decode("utf-8")) != None for i in ctx.files()):
-        return
-
-    try:
-        secretsPath = os.path.dirname(os.path.abspath(__file__)) + "/secrets.txt";
-        secrets = json.load(open(secretsPath))
-    except (IOError, ValueError) as ex:
-        ui.write(("Discord incoming hook could not load secrets because " + str(ex) + "\n").encode("utf-8"))
         return
 
     shortId = ctx.hex()[:12].decode("utf-8")
