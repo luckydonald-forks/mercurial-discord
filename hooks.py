@@ -1,5 +1,7 @@
-EXTENSIONS = [ "bat", "cginc", "compute", "cpp", "cs", "groovy", "h", "hgignore", "js", "lua", "py",
-    "shader"]
+EXTENSIONS = [
+    "bat", "cginc", "compute", "cpp", "cs", "groovy", "h", "hgignore", "js", "lua", "py",
+    "shader"
+]
 
 import json, os, re, urllib.error, urllib.request
 
@@ -14,7 +16,8 @@ except (IOError, ValueError) as ex:
 
 
 def EscapeMarkdown(str):
-    return str # TODO
+    return str  # TODO
+
 
 def incoming(ui, repo, node, **kwargs):
     ctx = repo[node]
@@ -55,9 +58,11 @@ def post_discord(ui, title, description, branch, author, shortId):
     if description:
         embed["description"] = description.decode("utf-8")
 
-    request = urllib.request.Request(secrets["webhookUrl"],
-        json.dumps({ "embeds": [embed] }).encode("utf-8"),
-        { "Content-Type": "application/json", "User-Agent": "Mercurial/5.8" })
+    request = urllib.request.Request(
+        secrets["webhookUrl"],
+        json.dumps({"embeds": [embed]}).encode("utf-8"),
+        {"Content-Type": "application/json", "User-Agent": "Mercurial/5.8"}
+    )
 
     try:
         urllib.request.urlopen(request)
