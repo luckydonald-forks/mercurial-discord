@@ -75,3 +75,59 @@ def post_discord(ui, title, description, branch, author, shortId):
         return
     # end try
 # end def
+
+
+def post_issue_numbers_to_hacknplan(ui, title, description, branch, author, shortId):
+    project_id = 0
+    url_to_post = secrets["hg"]["commitUrl"].format(short_id=shortId)
+    "<a href={}"
+    payload = {
+        "projectId": project_id,
+        # "workItemId": 0,
+        # "commentId": 0,
+        "text": "",
+        "user": {
+            "id": secrets['hacknplan']['user']['id'],
+            "username": "",
+            "email": "string",
+            "name": "string",
+            "creationDate": "2022-06-19T17:42:07.576Z"
+        },
+        "workLog": {
+            "projectId": 0,
+            "workItemId": 0,
+            "workLogId": 0,
+            "user": {
+                "id": 0,
+                "username": "string",
+                "email": "string",
+                "name": "string",
+                "creationDate": "2022-06-19T17:42:07.576Z"
+            },
+            "value": 0,
+            "comment": "string",
+            "creationDate": "2022-06-19T17:42:07.576Z"
+        },
+        "creationDate": "2022-06-19T17:42:07.576Z",
+        "updateDate": "2022-06-19T17:42:07.576Z"
+    }
+    if title:
+        embed["title"] = title.decode("utf-8")
+    # end if
+    if description:
+        embed["description"] = description.decode("utf-8")
+    # end if
+
+    request = urllib.request.Request(
+        secrets["webhookUrl"],
+        json.dumps({"embeds": [embed]}).encode("utf-8"),
+        {"Content-Type": "application/json", "User-Agent": "Mercurial/5.8"}
+    )
+
+    try:
+        urllib.request.urlopen(request)
+    except urllib.error.URLError as ex:
+        ui.write(("Discord incoming hook web request failed because " + str(ex) + "\n").encode("utf-8"))
+        return
+    # end try
+# end def
